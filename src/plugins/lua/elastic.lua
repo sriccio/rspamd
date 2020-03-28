@@ -71,7 +71,7 @@ local function elastic_send_data(task)
   local tbl = {}
   for _,value in pairs(rows) do
     table.insert(tbl, '{ "index" : { "_index" : "'..es_index..
-        '", "_type" : "logs" ,"pipeline": "rspamd-geoip"} }')
+        '", "pipeline": "rspamd-geoip"} }')
     table.insert(tbl, ucl.to_format(value, 'json-compact'))
   end
 
@@ -308,7 +308,7 @@ local function initial_setup(cfg, ev_base, worker)
         local obj = parser:get_object()
         local tbl = {}
         for _,item in ipairs(obj) do
-          table.insert(tbl, '{ "index" : { "_index" : ".kibana", "_type" : "doc" ,"_id": "'..
+          table.insert(tbl, '{ "index" : { "_index" : ".kibana", "_id": "'..
               item['_type'] .. ':' .. item["_id"]..'"} }')
           table.insert(tbl, ucl.to_format(item['_source'], 'json-compact'))
         end
